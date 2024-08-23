@@ -43,5 +43,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dataLayer\dataLayer.csproj">
+      <Project>{75e69f09-aca6-44c9-93ef-774d8fc0e71d}</Project>
+      <Name>dataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entityLayer\entityLayer.csproj">
+      <Project>{b7eae5bd-6ea6-48cb-bbb0-f0ef74a43c6b}</Project>
+      <Name>entityLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
