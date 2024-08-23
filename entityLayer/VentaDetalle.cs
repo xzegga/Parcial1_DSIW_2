@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entityLayer
 {
-    internal class VentaDetalle
+    public class VentaDetalle
     {
         //[IdDetalleVenta], [IdVenta], [IdProducto], [Cantidad], [TotalDetalle]
 
