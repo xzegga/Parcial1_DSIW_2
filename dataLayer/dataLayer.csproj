@@ -79,6 +79,18 @@
     <Compile Include="Migrations\202409180240224_AddUserFields.Designer.cs">
       <DependentUpon>202409180240224_AddUserFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202409180339291_AddCustomerAndVehicleEntities.cs" />
+    <Compile Include="Migrations\202409180339291_AddCustomerAndVehicleEntities.Designer.cs">
+      <DependentUpon>202409180339291_AddCustomerAndVehicleEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409180342004_AddCustomerAndVehicleEntities1.cs" />
+    <Compile Include="Migrations\202409180342004_AddCustomerAndVehicleEntities1.Designer.cs">
+      <DependentUpon>202409180342004_AddCustomerAndVehicleEntities1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409180344077_AddCustomerAndVehicleEntities2.cs" />
+    <Compile Include="Migrations\202409180344077_AddCustomerAndVehicleEntities2.Designer.cs">
+      <DependentUpon>202409180344077_AddCustomerAndVehicleEntities2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.cs" />
@@ -96,6 +108,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202409180240224_AddUserFields.resx">
       <DependentUpon>202409180240224_AddUserFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409180339291_AddCustomerAndVehicleEntities.resx">
+      <DependentUpon>202409180339291_AddCustomerAndVehicleEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409180342004_AddCustomerAndVehicleEntities1.resx">
+      <DependentUpon>202409180342004_AddCustomerAndVehicleEntities1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409180344077_AddCustomerAndVehicleEntities2.resx">
+      <DependentUpon>202409180344077_AddCustomerAndVehicleEntities2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
