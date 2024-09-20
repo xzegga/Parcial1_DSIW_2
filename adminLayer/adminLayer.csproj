@@ -121,9 +121,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -177,10 +179,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Productos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -213,6 +216,10 @@
     <ProjectReference Include="..\businessLayer\businessLayer.csproj">
       <Project>{dc4ac0bd-cd09-45e9-92ba-87d91d14f9a7}</Project>
       <Name>businessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dataLayer\dataLayer.csproj">
+      <Project>{75E69F09-ACA6-44C9-93EF-774D8FC0E71D}</Project>
+      <Name>dataLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\entityLayer\entityLayer.csproj">
       <Project>{b7eae5bd-6ea6-48cb-bbb0-f0ef74a43c6b}</Project>

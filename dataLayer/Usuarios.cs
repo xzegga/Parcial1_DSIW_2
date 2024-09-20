@@ -8,10 +8,13 @@ namespace dataLayer
 {
     public class Usuarios
     {
-        private SqlConnection connection;
-        public Usuarios()
+        private readonly SqlConnection _connection;
+        private readonly String _patron;
+
+        public Usuarios(CustomConfigurationManager configManager)
         {
-            connection = new SqlConnection(Conexion.cnn);
+            _connection = new SqlConnection(configManager.connection);
+            _patron = configManager.patron;
         }
 
         public List<Usuario> ListarUsuarios() { 
@@ -19,13 +22,13 @@ namespace dataLayer
             List<Usuario> userList = new List<Usuario>();
             try
             {
-                using (SqlCommand command = new SqlCommand("SP_ListarUsuarios", connection))
+                using (SqlCommand command = new SqlCommand("SP_ListarUsuarios", _connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@Patron", "sdf");
+                    command.Parameters.AddWithValue("@Patron", _patron);
 
-                    connection.Open();
+                    _connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -45,9 +48,38 @@ namespace dataLayer
             {
                 throw new ArgumentException("Error al obtener la lista de usuarios");
             }
-            finally { connection.Close(); }
+            finally { _connection.Close(); }
 
             return userList;
+        }
+
+        public void EditUser(Usuario user)
+        {
+            // Modify the user through a stored procedure SP_ModificarUsuario
+            try
+            {
+                using (SqlCommand command = new SqlCommand("SP_ModificarUsuario", _connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@IdUsuario", user.IdUsuario);
+                    command.Parameters.AddWithValue("@Nombres", user.Nombres);
+                    command.Parameters.AddWithValue("@Apellidos", user.Apellidos);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@Password", user.Password);
+                    command.Parameters.AddWithValue("@Reestablecer", user.Reestablecer);
+                    command.Parameters.AddWithValue("@Estado", user.Estado);
+                    command.Parameters.AddWithValue("@Fecha", user.Fecha);
+
+                    _connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error al modificar el usuario");
+            }
+            finally { _connection.Close(); }
         }
     }
 }

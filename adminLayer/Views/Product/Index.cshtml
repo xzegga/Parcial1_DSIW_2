@@ -1,0 +1,173 @@
+﻿@model IEnumerable<entityLayer.Producto>
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Productos</h2>
+<button class="btn btn-primary" onclick="clearForm()">Agregar Producto</button>
+
+<table id="productosTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Marca</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.IdProducto</td>
+                <td>@producto.NombreProducto</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.Marca.NombreMarca</td>
+                <td>@producto.Categoria.DescripcionCategoria</td>
+                <td>@producto.Precio</td>
+                <td>@producto.Stock</td>
+                <td>@(producto.Estado ? "Activo" : "Inactivo")</td>
+                <td>
+                    <button class="btn btn-warning" onclick="editProduct(@producto.IdProducto)">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteProduct(@producto.IdProducto)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productoModalLabel">Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productoForm">
+                    <input type="hidden" id="IdProducto" />
+                    <div class="form-group">
+                        <label for="NombreProducto">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="NombreProducto" required />
+                        <div class="invalid-feedback">El nombre del producto es requerido.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Descripcion">Descripción</label>
+                        <input type="text" class="form-control" id="Descripcion" />
+                    </div>
+                    <div class="form-group">
+                        <label for="IdMarca">Marca</label>
+                        <input type="number" class="form-control" id="IdMarca" required />
+                        <div class="invalid-feedback">La marca es requerida.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="IdCategoria">Categoría</label>
+                        <input type="number" class="form-control" id="IdCategoria" required />
+                        <div class="invalid-feedback">La categoría es requerida.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Precio">Precio</label>
+                        <input type="number" class="form-control" id="Precio" step="0.01" required />
+                        <div class="invalid-feedback">El precio es requerido.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Stock">Stock</label>
+                        <input type="number" class="form-control" id="Stock" required />
+                        <div class="invalid-feedback">El stock es requerido.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Estado">Estado</label>
+                        <select id="Estado" class="form-control">
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="saveButton" onclick="saveProduct()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function clearForm() {
+        $('#productoForm')[0].reset();
+        $('#IdProducto').val('');
+        $('#productoModalLabel').text('Agregar Producto');
+        $('#saveButton').attr('onclick', 'saveProduct()');
+        $('#productoModal').modal('show');
+    }
+
+    function editProduct(id) {
+        $.get('/Product/GetProduct', { id: id }, function (data) {
+            $('#IdProducto').val(data.IdProducto);
+            $('#NombreProducto').val(data.NombreProducto);
+            $('#Descripcion').val(data.Descripcion);
+            $('#IdMarca').val(data.IdMarca);
+            $('#IdCategoria').val(data.IdCategoria);
+            $('#Precio').val(data.Precio);
+            $('#Stock').val(data.Stock);
+            $('#Estado').val(data.Estado);
+            $('#productoModalLabel').text('Editar Producto');
+            $('#saveButton').attr('onclick', 'updateProduct()');
+            $('#productoModal').modal('show');
+        });
+    }
+
+    function deleteProduct(id) {
+        if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            $.post('/Product/DeleteProduct', { id: id }, function () {
+                location.reload();
+            });
+        }
+    }
+
+    function saveProduct() {
+        var producto = {
+            NombreProducto: $('#NombreProducto').val(),
+            Descripcion: $('#Descripcion').val(),
+            IdMarca: $('#IdMarca').val(),
+            IdCategoria: $('#IdCategoria').val(),
+            Precio: $('#Precio').val(),
+            Stock: $('#Stock').val(),
+            Estado: $('#Estado').val() === "true"
+        };
+
+        $.post('/Product/CreateProduct', producto, function () {
+            $('#productoModal').modal('hide');
+            location.reload();
+        });
+    }
+
+    function updateProduct() {
+        var producto = {
+            IdProducto: $('#IdProducto').val(),
+            NombreProducto: $('#NombreProducto').val(),
+            Descripcion: $('#Descripcion').val(),
+            IdMarca: $('#IdMarca').val(),
+            IdCategoria: $('#IdCategoria').val(),
+            Precio: $('#Precio').val(),
+            Stock: $('#Stock').val(),
+            Estado: $('#Estado').val() === "true"
+        };
+
+        $.post('/Product/UpdateProduct', producto, function () {
+            $('#productoModal').modal('hide');
+            location.reload();
+        });
+    }
+</script>
