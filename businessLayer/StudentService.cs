@@ -23,7 +23,6 @@ namespace businessLayer
             }
             catch (Exception ex)
             {
-                // Manejar excepciones o loguearlas según sea necesario
                 throw new ApplicationException("Error al obtener la lista de estudiantes.", ex);
             }
         }
@@ -37,7 +36,6 @@ namespace businessLayer
             }
             catch (Exception ex)
             {
-                // Manejar excepciones o loguearlas según sea necesario
                 throw new ApplicationException("Error al buscar un estudiante por criterio.", ex);
             }
         }

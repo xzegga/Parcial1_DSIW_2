@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using entityLayer; // Asumiendo que la entidad Estudiante está en esta capa
+using entityLayer; 
 
 namespace dataLayer
 {
     public class StudentRepository
     {
-        private readonly SqlConnection _SqlConnection;
+        private readonly string _connectionString;
         private readonly String _patron;
 
         public StudentRepository(CustomConfigurationManager configManager)
         {
-            _SqlConnection = new SqlConnection(configManager.connection);
+            _connectionString = configManager.connection;
             _patron = configManager.patron;
         }
 
@@ -23,7 +22,7 @@ namespace dataLayer
         {
             List<Estudiante> estudiantes = new List<Estudiante>();
 
-            using (SqlConnection connection = _SqlConnection)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("SP_LeerEstudiante", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -58,7 +57,7 @@ namespace dataLayer
         {
             Estudiante estudiante = null;
 
-            using (SqlConnection connection = _SqlConnection)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("SP_BuscarEstudiante", connection);
                 command.CommandType = CommandType.StoredProcedure;
