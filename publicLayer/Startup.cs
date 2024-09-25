@@ -7,6 +7,7 @@ using dataLayer;
 using businessLayer;
 using entityLayer;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
 
 namespace publicLayer
 {
@@ -16,6 +17,7 @@ namespace publicLayer
         {
             ConfigureAuth(app);
             CreateDefaultUserAndRoles();
+            SeedVehicleCategories();
         }
 
         public void ConfigureAuth(IAppBuilder app)
@@ -104,6 +106,28 @@ namespace publicLayer
                 }
 
                 // You can seed more users if needed
+            }
+        }
+
+        // Método Seed para agregar categorías de vehículos
+        private void SeedVehicleCategories()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                // Verificamos si ya existen categorías para evitar duplicados
+                if (!context.VehicleCategories.Any())
+                {
+                    context.VehicleCategories.AddRange(new[]
+                    {
+                        new VehicleCategory { CategoryName = "Sedan" },
+                        new VehicleCategory { CategoryName = "SUV" },
+                        new VehicleCategory { CategoryName = "Hatchback" },
+                        new VehicleCategory { CategoryName = "Convertible" },
+                        new VehicleCategory { CategoryName = "Pickup" }
+                    });
+
+                    context.SaveChanges(); // Guardamos los cambios
+                }
             }
         }
     }

@@ -18,6 +18,6 @@ namespace entityLayer
 
         // Relación con la categoría del vehículo
         public int VehicleCategoryId { get; set; }
-        public VehicleCategory VehicleCategory { get; set; }
+        public VehicleCategory VehicleCategory { get; set; }        
     }
 }
