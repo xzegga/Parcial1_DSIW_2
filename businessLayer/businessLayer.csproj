@@ -82,6 +82,7 @@
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="PermissionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RentalService.cs" />
     <Compile Include="VehicleCategoryService.cs" />
     <Compile Include="VehicleService.cs" />
   </ItemGroup>

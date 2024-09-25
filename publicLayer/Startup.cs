@@ -31,13 +31,12 @@ namespace publicLayer
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"), // Path to the login page
-                LogoutPath = new PathString("/Account/Logout"), // Path to logout
-                ExpireTimeSpan = TimeSpan.FromMinutes(30), // Session expiration time
-                SlidingExpiration = true // Renew the session automatically if it's close to expiring
+                LoginPath = new PathString("/Account/Login"),
+                LogoutPath = new PathString("/Account/Logout"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(30), 
+                SlidingExpiration = true
             });
 
-            // Use this to enable external sign-in cookies (optional, if you're using external logins like Google or Facebook)
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
         }
 
@@ -109,12 +108,10 @@ namespace publicLayer
             }
         }
 
-        // Método Seed para agregar categorías de vehículos
         private void SeedVehicleCategories()
         {
             using (var context = new ApplicationDbContext())
             {
-                // Verificamos si ya existen categorías para evitar duplicados
                 if (!context.VehicleCategories.Any())
                 {
                     context.VehicleCategories.AddRange(new[]
